@@ -1,6 +1,4 @@
 package com.demo.Movies_Database_Managemenet_System;
-import java.io.Console;
-import java.io.IOException;
 import java.util.Scanner;
 import org.hibernate.SessionFactory;
 
@@ -10,22 +8,19 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 
-
-
-
 public class App {
     private static Scanner scanner;
     private static String user1="sree";
     private static String password1="S&ee1";
     private static String user2="king";
     private static String password2="K!ng2";
-	public static void main(String[] args)  throws IOException {
+	public static void main(String[] args) {
 		SessionFactory factory =null;
 		scanner = new Scanner(System.in);
 		while(true) {
-        	System.out.println("1. Create Account");
-            System.out.println("2. Login as Admin");
-            System.out.println("3. Login as User");
+        	System.out.println("1. Create User Account");
+            System.out.println("2. Admin Login");
+            System.out.println("3. User Login");
             System.out.println("4. Exit");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
@@ -57,7 +52,7 @@ public class App {
         
         
     }
-	private static SessionFactory userLogin() throws IOException {
+	private static SessionFactory userLogin() {
 		SessionFactory factory = HibernateUtil.getSessionFactory();
 		try (Session session = factory.openSession()) {
 	        Transaction transaction = session.beginTransaction();
@@ -70,8 +65,7 @@ public class App {
 	        
 	        // Get the password from the user
 	        System.out.println("Enter Password");
-			String password =scanner.nextLine();
-	        
+	        String password = scanner.nextLine();
 	        
 	        // Check if the entered username and password exist in the Login table
 	        Query<Login> query = session.createQuery("FROM Login WHERE user.userName = :userName AND password = :password", Login.class)
@@ -129,14 +123,11 @@ public class App {
 	    }
 		return null;
 	}
-	
-	private static SessionFactory adminLogin() throws IOException {
+	private static SessionFactory adminLogin() {
 		System.out.println("Enter UserName");
 		String user=scanner.nextLine();
 		System.out.println("Enter Password");
-		String pass =scanner.nextLine();
-
-        
+		String pass=scanner.nextLine();
 		if ((user.equals(user1) || user.equals(user2)) && (pass.equals(password1) || pass.equals(password2))) {
 			 
 			// Obtain a Hibernate SessionFactory
@@ -149,6 +140,7 @@ public class App {
 	            System.out.println("3. Movie");
 	            System.out.println("4. Actor");
 	            System.out.println("5. User");
+	            //System.out.println("6. Login");
 	            System.out.println("6. Exit");
 	            System.out.print("Enter your choice: ");
 	            int choice = scanner.nextInt();
@@ -193,7 +185,7 @@ public class App {
 		op1.insert(factory);
 		return factory;
 	}
-	
+
 	private static SessionFactory user() {
 		// Infinite loop for menu-driven CRUD operations
 		SessionFactory factory = HibernateUtil.getSessionFactory();
